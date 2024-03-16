@@ -11,9 +11,13 @@
   
   .medium-banner {
     width: 50%; /* Set to the desired width */
-    height: auto; /* Maintain aspect ratio */
+    height: 50%; /* Maintain aspect ratio */
     margin: auto; /* Center the image horizontally */
     display: block; /* Ensure the image is displayed as a block element */
+  }
+  .medium-banner img{
+    max-width: 100%;
+    max-height: 100%;
   }
   
   .card-content {
