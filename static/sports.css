@@ -1,0 +1,22 @@
+.container {
+    position: relative; /* Set container as reference for absolute positioning */
+  }
+  
+  .btn {
+    position: absolute;
+    top: 20px; /* Adjust the distance from the top as needed */
+    left: 20px; /* Adjust the distance from the left as needed */
+    z-index: 999; /* Ensure button stays on top */
+  }
+  
+  .medium-banner {
+    width: 50%; /* Set to the desired width */
+    height: auto; /* Maintain aspect ratio */
+    margin: auto; /* Center the image horizontally */
+    display: block; /* Ensure the image is displayed as a block element */
+  }
+  
+  .card-content {
+    text-align: center; /* Align content below the image to the center */
+    margin-top: 20px; /* Adjust spacing from the image as needed */
+  }   

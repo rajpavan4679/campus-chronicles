@@ -35,6 +35,13 @@ login_password=""
 def index(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
+@app.get('/sports1')
+def index(request: Request):
+    return templates.TemplateResponse("sports1.html", {"request": request})
+
+@app.get('/sports2')
+def index(request: Request):
+    return templates.TemplateResponse("sports2.html", {"request": request})
 @app.get('/index1')
 def index(request: Request):
     cur = conn.cursor()
