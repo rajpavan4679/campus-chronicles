@@ -99,6 +99,16 @@ async def signup(
     cur.close() 
  
     return RedirectResponse("/login", status_code=303)
+@app.post("/publish")
+async def publish_post(title: str = Form(...), category: str = Form(...), content: str = Form(...)):
+    try:
+        # Store the data in the PostgreSQL database
+        cur.execute("INSERT INTO postdetail (category,title,matter) VALUES (%s, %s, %s)", (category,title, content))
+        conn.commit()
+        return {"success": True}
+    except Exception as e:
+        return JSONResponse(status_code=500, content={"success": False, "message": str(e)})
+
 
 
 
