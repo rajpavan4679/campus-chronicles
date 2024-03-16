@@ -38,10 +38,23 @@ def index(request: Request):
 @app.get('/sports1')
 def index(request: Request):
     return templates.TemplateResponse("sports1.html", {"request": request})
-
-@app.get('/sports2')
+@app.get('/hackathon')
 def index(request: Request):
-    return templates.TemplateResponse("sports2.html", {"request": request})
+    return templates.TemplateResponse("hackathon.html", {"request": request})
+@app.get('/clubs')
+def index(request: Request):
+    return templates.TemplateResponse("clubs.html", {"request": request})
+@app.get('/fests')
+def index(request: Request):
+    return templates.TemplateResponse("fests.html", {"request": request})
+@app.get('/culturals')
+def index(request: Request):
+    return templates.TemplateResponse("culturals.html", {"request": request})
+
+@app.get('/create')
+def index(request: Request):
+    return templates.TemplateResponse("create.html", {"request": request})
+
 @app.get('/index1')
 def index(request: Request):
     cur = conn.cursor()
