@@ -3,9 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Create Post</title>
 <style>
     body{
+        color: white;
     background-image: url('https://img.freepik.com/free-photo/blue-smooth-wall-textured-background_53876-106133.jpg?w=826&t=st=1710609371~exp=1710609971~hmac=43b9564dceec76ad4db023d1db8bc1b831a58508558f78821b2714539fe74216');
     background-repeat: no-repeat;
     background-size: cover;
@@ -40,6 +42,29 @@
         margin-top: 50px;
         font-size: 18px;
     }
+
+
+    .container {
+    position: relative; /* Set container as reference for absolute positioning */
+  }
+  
+ 
+  
+  .medium-banner {
+    width: 50%; /* Set to the desired width */
+    height: 50%; /* Maintain aspect ratio */
+    margin: auto; /* Center the image horizontally */
+    display: block; /* Ensure the image is displayed as a block element */
+  }
+  .medium-banner img{
+    max-width: 100%;
+    max-height: 100%;
+  }
+  
+  .card-content {
+    text-align: center; /* Align content below the image to the center */
+    margin-top: 20px; /* Adjust spacing from the image as needed */
+  }   
 </style>
     <script src="https://kit.fontawesome.com/20c5629a29.js" crossorigin="anonymous"></script>
   
@@ -52,35 +77,39 @@
       rel="stylesheet">
   
 </head>
-<h1 style="display: flex;flex-direction: row;justify-content: center;">Create Post</h1>
-<button class="btn btn-primary" id="goToIndexButton">
-  <i class='fas fa-arrow-left' style='font-size:24px'></i>
-</button>
-<body>
-<div class="container">
-    <img class="image" src="https://images.unsplash.com/photo-1543128639-4cb7e6eeef1b?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bGFwdG9wJTIwc2V0dXB8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80" alt="post">
-    
-    <div class="form-control">
-        <label for="fileInput">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16" id="addIcon">
-                <path d="M7.5 0a7.5 7.5 0 1 1 0 15 7.5 7.5 0 0 1 0-15zm0 1a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13zm-.5 4a.5.5 0 0 1 .5.5V7h2a.5.5 0 0 1 0 1h-2v2.5a.5.5 0 0 1-1 0V8h-2a.5.5 0 0 1 0-1h2V5.5a.5.5 0 0 1 .5-.5z"/>
-            </svg>
-        </label>
-        <input type="text" class="input-text-field" placeholder="Title">
-        <select class="category-dropdown" onchange="updateCategory()">
-            <option value="">Select Category</option>
-            <option value="sport">Sport</option>
-            <option value="club">Club</option>
-            <option value="hackathon">Hackathon</option>
-            <option value="fest">Fest</option>
-            <option value="culturals">Culturals</option>
-            <option value="others">Others</option>
-        </select>
-        <button onclick="savePost()" class="btn btn-primary">Publish</button>
-    </div>
 
-    <textarea class="textarea" rows="5" placeholder="Tell your story..."></textarea>
-</div>
+
+<h1 style="display: flex;flex-direction: row;justify-content: center;">Create Post</h1>
+
+<button class="btn btn-primary" id="goToIndexButton">
+    <i class='fas fa-arrow-left' style=' font-size:24px'></i>
+  </button>
+
+<body>
+    <div class="container">
+        <img class="image" src="https://images.unsplash.com/photo-1543128639-4cb7e6eeef1b?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bGFwdG9wJTIwc2V0dXB8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80" alt="post">
+        <form  action="" method="post">
+            <div class="form-control">
+                <label for="fileInput">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16" id="addIcon">
+                        <path d="M7.5 0a7.5 7.5 0 1 1 0 15 7.5 7.5 0 0 1 0-15zm0 1a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13zm-.5 4a.5.5 0 0 1 .5.5V7h2a.5.5 0 0 1 0 1h-2v2.5a.5.5 0 0 1-1 0V8h-2a.5.5 0 0 1 0-1h2V5.5a.5.5 0 0 1 .5-.5z"/>
+                    </svg>
+                </label>
+                <input type="text" name="title" class="input-text-field" placeholder="Title">
+                <select name="category" class="category-dropdown" onchange="updateCategory()">
+                    <option value="">Select Category</option>
+                    <option value="sports">sports</option>
+                    <option value="clubs">clubs</option>
+                    <option value="hackathon">hackathon</option>
+                    <option value="fests">fests</option>
+                    <option value="culturals">culturals</option>
+                    <option value="others">Others</option>
+                </select>
+            </div>
+            <textarea name="content" class="textarea" rows="5" placeholder="Tell your story..."></textarea>
+            <button type="submit" class="btn btn-primary">Publish</button>
+        </form>
+    </div>
 
 <script>
     // JavaScript code
@@ -93,32 +122,9 @@
         // Update the selected category in your data or perform any other action as needed
         console.log("Selected category:", selectedCategory);
     }
-    function savePost() {
-    const title = document.querySelector('.input-text-field').value;
-    const category = document.querySelector('.category-dropdown').value;
-    const content = document.querySelector('.textarea').value;
-
-    fetch('/publish', {
-        method: 'POST',
-        body: JSON.stringify({ title, category, content }),
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            alert("Post published successfully!");
-        } else {
-            alert("Failed to publish post.");
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert("Failed to publish post.");
-    });
-}
+    
 
 </script>
 </body>
+
 </html>

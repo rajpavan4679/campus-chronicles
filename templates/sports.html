@@ -82,11 +82,58 @@
     </h4>
   </div>
 
+
+  <div id="dynamicContent"></div>
+
   <script>
+
+    // Clear entire stored content from Local Storage
+    // localStorage.removeItem("sportstoredContent");
+  
     document.getElementById("goToIndexButton").addEventListener("click", function() {
       // Redirect to index.html
       window.location.href = "/index1";
     });
+  
+  
+    function createAndSaveCardContent(title, content) {
+    // Create a unique ID for the card content
+    var uniqueId = 'card-content-' + Date.now();
+
+    // Save the card content to local storage
+    var sportstoredContent = JSON.parse(localStorage.getItem("sportstoredContent")) || [];
+    sportstoredContent.push({ id: uniqueId, title: title, content: content });
+    localStorage.setItem("sportstoredContent", JSON.stringify(sportstoredContent));
+}
+
+// Load stored card content from local storage on page load
+window.onload = function() {
+    var sportstoredContent = JSON.parse(localStorage.getItem("sportstoredContent")) || [];
+    sportstoredContent.forEach(function(item) {
+      var uniqueId = 'card-content-' + Date.now();
+
+      // Create the card content HTML
+      var cardContentHTML = `
+          <div id="${uniqueId}" class="card-content">
+              <div class="card-wrapper">
+                  <div class="wrapper">
+                      <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
+                  </div>
+              </div>
+              <h3 class="headline headline-3">
+                  <a href="#" class="card-title hover-2">${item.title}</a>
+              </h3>
+              <h4>${item.content}</h4>
+          </div>`;
+
+      // Append the HTML to the dynamic content div
+      document.getElementById("dynamicContent").innerHTML += cardContentHTML;
+    });
+};
+  // Example usage:
+  var titleFromApp = "{{title}}"; // Replace with actual title variable from app.py
+  var contentFromApp = "{{content}}"; // Replace with actual content variable from app.py
+  createAndSaveCardContent(titleFromApp, contentFromApp);
   </script>
 
 </body>

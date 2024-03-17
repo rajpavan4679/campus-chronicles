@@ -35,9 +35,10 @@ login_password=""
 def index(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
-@app.get('/sports1')
+@app.get('/sports')
 def index(request: Request):
-    return templates.TemplateResponse("sports1.html", {"request": request})
+    return templates.TemplateResponse("sports.html", {"request": request})
+
 @app.get('/hackathon')
 def index(request: Request):
     return templates.TemplateResponse("hackathon.html", {"request": request})
@@ -99,16 +100,29 @@ async def signup(
     cur.close() 
  
     return RedirectResponse("/login", status_code=303)
-@app.post("/publish")
-async def publish_post(title: str = Form(...), category: str = Form(...), content: str = Form(...)):
-    try:
-        # Store the data in the PostgreSQL database
-        cur.execute("INSERT INTO postdetail (category,title,matter) VALUES (%s, %s, %s)", (category,title, content))
-        conn.commit()
-        return {"success": True}
-    except Exception as e:
-        return JSONResponse(status_code=500, content={"success": False, "message": str(e)})
 
+
+
+@app.post("/create")
+async def create_post(request: Request, title: str = Form(...), category: str = Form(...), content: str = Form(...)):
+    # Store the data in the PostgreSQL database
+    cur = conn.cursor()
+    cur.execute("INSERT INTO postdetail (category, title, matter) VALUES (%s, %s, %s)", (category, title, content))
+    conn.commit()
+    cur.close()
+
+    # Construct the template filename based on the category
+    template_filename = f"{category}.html"
+    
+
+    context = {
+        "request": request,
+        "title": title,
+        "category": category,
+        "content": content
+    }
+
+    return templates.TemplateResponse(template_filename, context)
 
 
 

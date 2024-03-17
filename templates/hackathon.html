@@ -39,56 +39,186 @@
 </button>
 
 <body>
-  <div class="container">
-    <div class="card feature-card">
-      <figure class="card-banner img-holder medium-banner">
-        <img src="./static/featured-4.png" loading="lazy" alt="Self-observation is the first step of inner unfolding" class="img-cover">
-      </figure>
-    </div>
-  </div>
 
-  <div class="card-content">
-    <div class="card-wrapper">
-      <div class="wrapper">
-        <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
-      </div>
-    </div>
-    <h3 class="headline headline-3">
-      <a href="#" class="card-title hover-2">Embrace sports, foster excellence</a>
-    </h3>
-    <h4>
-      🎊Winners.....#sports#basketball<br> 
-    </h4>
-  </div>
+  <div id="cont">
+        <div class="container">
+          <div class="card feature-card">
+            <figure class="card-banner img-holder medium-banner">
+              <img src="./static/featured-4.png" loading="lazy" alt="Self-observation is the first step of inner unfolding" class="img-cover">
+            </figure>
+          </div>
+        </div>
 
-  <div class="container">
-    <div class="card feature-card">
-      <figure class="card-banner img-holder medium-banner">
-        <img src="./static/topic-1.png" loading="lazy"  class="img-cover">
-      </figure>
-    </div>
-  </div>
-  <div class="card-content">
-    <div class="card-wrapper">
-      <div class="wrapper">
-        <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
-      </div>
-    </div>
-    <h3 class="headline headline-3">
-      <a href="#" class="card-title hover-2">Embrace sports, foster excellence</a>
-    </h3>
-    <h4>
-      Match day.....!!!!!!!!!!!!!🎊<br> 
-    </h4>
-  </div>
+        <div class="card-content">
+          <div class="card-wrapper">
+            <div class="wrapper">
+              <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
+            </div>
+          </div>
+          <h3 class="headline headline-3">
+            <a href="#" class="card-title hover-2">Embrace sports, foster excellence</a>
+          </h3>
+          <h4>
+            🎊Winners.....#sports#basketball<br> 
+          </h4>
+        </div>
 
+        <div class="container">
+          <div class="card feature-card">
+            <figure class="card-banner img-holder medium-banner">
+              <img src="./static/topic-1.png" loading="lazy"  class="img-cover">
+            </figure>
+          </div>
+        </div>
+        <div class="card-content">
+          <div class="card-wrapper">
+            <div class="wrapper">
+              <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
+            </div>
+          </div>
+          <h3 class="headline headline-3">
+            <a href="#" class="card-title hover-2">Embrace sports, foster excellence</a>
+          </h3>
+          <h4>
+            Match day.....!!!!!!!!!!!!!🎊<br> 
+          </h4>
+        </div>
+  </div>
+  
+  <div id="dynamicContent"></div>
+
+
+ 
   <script>
+
+    // Clear entire stored content from Local Storage
+    // localStorage.removeItem("storedContent");
+  
     document.getElementById("goToIndexButton").addEventListener("click", function() {
       // Redirect to index.html
       window.location.href = "/index1";
     });
-  </script>
+  
+  
+    function createAndSaveCardContent(title, content) {
+    // Create a unique ID for the card content
+    var uniqueId = 'card-content-' + Date.now();
 
+    // Save the card content to local storage
+    var storedContent = JSON.parse(localStorage.getItem("storedContent")) || [];
+    storedContent.push({ id: uniqueId, title: title, content: content });
+    localStorage.setItem("storedContent", JSON.stringify(storedContent));
+}
+
+// Load stored card content from local storage on page load
+window.onload = function() {
+    var storedContent = JSON.parse(localStorage.getItem("storedContent")) || [];
+    storedContent.forEach(function(item) {
+      var uniqueId = 'card-content-' + Date.now();
+
+      // Create the card content HTML
+      var cardContentHTML = `
+          <div id="${uniqueId}" class="card-content">
+              <div class="card-wrapper">
+                  <div class="wrapper">
+                      <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
+                  </div>
+              </div>
+              <h3 class="headline headline-3">
+                  <a href="#" class="card-title hover-2">${item.title}</a>
+              </h3>
+              <h4>${item.content}</h4>
+          </div>`;
+
+      // Append the HTML to the dynamic content div
+      document.getElementById("dynamicContent").innerHTML += cardContentHTML;
+    });
+};
+  // Example usage:
+  var titleFromApp = "{{title}}"; // Replace with actual title variable from app.py
+  var contentFromApp = "{{content}}"; // Replace with actual content variable from app.py
+  createAndSaveCardContent(titleFromApp, contentFromApp);
+  </script>
 </body>
 
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+<script>
+
+  // Clear entire stored content from Local Storage
+  //  localStorage.removeItem("storedContent");
+
+  document.getElementById("goToIndexButton").addEventListener("click", function() {
+    // Redirect to index.html
+    window.location.href = "/index1";
+  });
+
+
+  function createAndSaveCardContent(title, content) {
+    // Create a unique ID for the card content
+    var uniqueId = 'card-content-' + Date.now();
+
+    // Create the card content HTML
+    var cardContentHTML = `
+      <div id="${uniqueId}" class="card-content">
+        <div class="card-wrapper">
+          <div class="wrapper">
+            <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
+          </div>
+        </div>
+        <h3 class="headline headline-3">
+          <a href="#" class="card-title hover-2">${title}</a>
+        </h3>
+        <h4>${content}</h4>
+      </div>`;
+
+    // Append the HTML to the dynamic content div
+    document.getElementById("dynamicContent").innerHTML += cardContentHTML;
+
+    // Save the card content to local storage
+    var storedContent = JSON.parse(localStorage.getItem("storedContent")) || [];
+    storedContent.push({ id: uniqueId, title: title, content: content });
+    localStorage.setItem("storedContent", JSON.stringify(storedContent));
+  }
+
+  // Load stored card content from local storage on page load
+  window.onload = function() {
+// Check if content is already loaded to avoid duplication
+if (!localStorage.getItem("loadedContent")) {
+  var storedContent = JSON.parse(localStorage.getItem("storedContent")) || [];
+  storedContent.forEach(function(item) {
+    createAndSaveCardContent(item.title, item.content);
+  });
+  // Set a flag in localStorage to indicate that content is loaded
+  localStorage.setItem("loadedContent", true);
+}
+};
+
+// Example usage:
+var titleFromApp = "{{title}}"; // Replace with actual title variable from app.py
+var contentFromApp = "{{content}}"; // Replace with actual content variable from app.py
+createAndSaveCardContent(titleFromApp, contentFromApp);
+</script> -->
