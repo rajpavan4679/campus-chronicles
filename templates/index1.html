@@ -235,7 +235,7 @@
 
                     <div class="slider-content">
                       <span class="slider-title">Sport</span>
-                      <p class="slider-subtitle">2 Articles</p>
+                      <p class="slider-subtitle"><span id="sportcount"></span> Articles</p>
                     </div>
 
                   </a>
@@ -252,7 +252,7 @@
                     <div class="slider-content">
                       <span class="slider-title">Clubs</span>
 
-                      <p class="slider-subtitle">6 Articles</p>
+                      <p class="slider-subtitle"><span id="clubcount"></span> Articles</p>
                     </div>
                   </a>
                 </li>
@@ -267,7 +267,7 @@
 
                     <div class="slider-content">
                         <span class="slider-title">Hackathons</span>                  
-                      <p class="slider-subtitle">3 Articles</p>
+                      <p class="slider-subtitle"><span id="hackcount"></span> Articles</p>
                     </div>
                   </a>
                 </li>
@@ -283,7 +283,7 @@
                     <div class="slider-content">
                       <span class="slider-title">Fests</span>
 
-                      <p class="slider-subtitle">4 Articles</p>
+                      <p class="slider-subtitle"><span id="festcount"></span> Articles</p>
                     </div>
 
                   </a>
@@ -300,7 +300,7 @@
                     <div class="slider-content">
                       <span class="slider-title">Culturals</span>
                       
-                      <p class="slider-subtitle">4 Articles</p>
+                      <p class="slider-subtitle"><span id="culturalcount"></span> Articles</p>
                     </div>
 
                   </a>
@@ -1010,7 +1010,28 @@
   <!-- 
     - ionicon link
   -->
+
+
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+
+
+
+  <script>
+    var sportCount = localStorage.getItem("sportcount");
+    var festCount = localStorage.getItem("festcount");
+    var culturalCount = localStorage.getItem("culturalcount");
+    var clubCount = localStorage.getItem("clubcount");
+    var hackCount = localStorage.getItem("hackcount");
+
+    // Update HTML content with counts
+    document.getElementById("sportcount").textContent = sportCount;
+    document.getElementById("festcount").textContent = festCount;
+    document.getElementById("culturalcount").textContent = culturalCount;
+    document.getElementById("clubcount").textContent = clubCount;
+    document.getElementById("hackcount").textContent = hackCount;
+
+  </script>
 </body>
 </html>

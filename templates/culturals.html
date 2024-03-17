@@ -82,13 +82,90 @@
     </h4>
   </div>
 
+  <div id="dynamicContent"></div>
+
+
+ 
   <script>
+
+    // Clear entire stored content from Local Storage
+    // localStorage.removeItem("culturalstoredContent");
+
+    function countContainersWithImages() {
+    var containersWithImages = document.querySelectorAll('.container img').length;
+      
+      // Count containers with images from local storage
+      var culturalstoredContent = JSON.parse(localStorage.getItem("culturalstoredContent")) || [];
+      culturalstoredContent.forEach(function(item) {
+        if (item.imgdata) {
+          containersWithImages++;
+        }
+      });
+
+      return containersWithImages;
+    }
+   var containerCount = countContainersWithImages();
+ 
+    localStorage.setItem("culturalcount", containerCount);
+
+
+  // Example usage:
+  var containerCount = countContainersWithImages();
+  console.log("Total containers with images:", containerCount);
+  
     document.getElementById("goToIndexButton").addEventListener("click", function() {
       // Redirect to index.html
       window.location.href = "/index1";
     });
-  </script>
+  
+  
+    function createAndSaveCardContent(title, content,imgdata) {
+    // Create a unique ID for the card content
+    var uniqueId = 'card-content-' + Date.now();
 
+    // Save the card content to local storage
+    var culturalstoredContent = JSON.parse(localStorage.getItem("culturalstoredContent")) || [];
+    culturalstoredContent.push({ id: uniqueId, title: title, content: content,imgdata:imgdata });
+    localStorage.setItem("culturalstoredContent", JSON.stringify(culturalstoredContent));
+}
+
+// Load stored card content from local storage on page load
+window.onload = function() {
+    var culturalstoredContent = JSON.parse(localStorage.getItem("culturalstoredContent")) || [];
+    culturalstoredContent.forEach(function(item) {
+        // Check if imgdata exists
+        if (item.imgdata) {
+            var uniqueId = 'card-content-' + Date.now();
+            var cardContentHTML = `
+                <div id="${uniqueId}">
+                  <div class="container">
+                      <div class="card feature-card">
+                        <figure class="card-banner img-holder medium-banner">
+                          <img src="data:image/png;base64,${ item.imgdata }">
+                        </figure>
+                      </div>
+                    </div> 
+                  
+                  <div class="card-content">
+                    <h3 class="headline headline-3">
+                        <a href="#" class="card-title hover-2">${item.title}</a>
+                    </h3>
+                    <h4>${item.content}</h4>
+                  </div>  
+
+                </div>`;
+            document.getElementById("dynamicContent").innerHTML += cardContentHTML;
+        }
+    });
+};
+
+  // Example usage:
+  var titleFromApp = "{{title}}"; // Replace with actual title variable from app.py
+  var contentFromApp = "{{content}}";// Replace with actual content variable from app.py
+  var imgdata ="{{image_data}}";
+
+  createAndSaveCardContent(titleFromApp, contentFromApp,imgdata);
+</script>
 </body>
 
 </html>

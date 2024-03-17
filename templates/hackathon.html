@@ -93,7 +93,28 @@
 
     // Clear entire stored content from Local Storage
     // localStorage.removeItem("storedContent");
-  
+    
+    function countContainersWithImages() {
+    var containersWithImages = document.querySelectorAll('.container img').length;
+      
+      // Count containers with images from local storage
+      var storedContent = JSON.parse(localStorage.getItem("storedContent")) || [];
+      storedContent.forEach(function(item) {
+        if (item.imgdata) {
+          containersWithImages++;
+        }
+      });
+
+      return containersWithImages;
+    }
+
+    // Example usage:
+    var containerCount = countContainersWithImages();
+
+    localStorage.setItem("hackcount", containerCount);
+
+    
+
     document.getElementById("goToIndexButton").addEventListener("click", function() {
       // Redirect to index.html
       window.location.href = "/index1";
