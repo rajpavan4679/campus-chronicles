@@ -100,13 +100,13 @@
     });
   
   
-    function createAndSaveCardContent(title, content) {
+    function createAndSaveCardContent(title, content,imgdata) {
     // Create a unique ID for the card content
     var uniqueId = 'card-content-' + Date.now();
 
     // Save the card content to local storage
     var storedContent = JSON.parse(localStorage.getItem("storedContent")) || [];
-    storedContent.push({ id: uniqueId, title: title, content: content });
+    storedContent.push({ id: uniqueId, title: title, content: content,imgdata:imgdata });
     localStorage.setItem("storedContent", JSON.stringify(storedContent));
 }
 
@@ -114,30 +114,38 @@
 window.onload = function() {
     var storedContent = JSON.parse(localStorage.getItem("storedContent")) || [];
     storedContent.forEach(function(item) {
-      var uniqueId = 'card-content-' + Date.now();
+        // Check if imgdata exists
+        if (item.imgdata) {
+            var uniqueId = 'card-content-' + Date.now();
+            var cardContentHTML = `
+                <div id="${uniqueId}">
+                  <div class="container">
+                      <div class="card feature-card">
+                        <figure class="card-banner img-holder medium-banner">
+                          <img src="data:image/png;base64,${ item.imgdata }">
+                        </figure>
+                      </div>
+                    </div> 
+                  
+                  <div class="card-content">
+                    <h3 class="headline headline-3">
+                        <a href="#" class="card-title hover-2">${item.title}</a>
+                    </h3>
+                    <h4>${item.content}</h4>
+                  </div>  
 
-      // Create the card content HTML
-      var cardContentHTML = `
-          <div id="${uniqueId}" class="card-content">
-              <div class="card-wrapper">
-                  <div class="wrapper">
-                      <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
-                  </div>
-              </div>
-              <h3 class="headline headline-3">
-                  <a href="#" class="card-title hover-2">${item.title}</a>
-              </h3>
-              <h4>${item.content}</h4>
-          </div>`;
-
-      // Append the HTML to the dynamic content div
-      document.getElementById("dynamicContent").innerHTML += cardContentHTML;
+                </div>`;
+            document.getElementById("dynamicContent").innerHTML += cardContentHTML;
+        }
     });
 };
+
   // Example usage:
   var titleFromApp = "{{title}}"; // Replace with actual title variable from app.py
-  var contentFromApp = "{{content}}"; // Replace with actual content variable from app.py
-  createAndSaveCardContent(titleFromApp, contentFromApp);
+  var contentFromApp = "{{content}}";// Replace with actual content variable from app.py
+  var imgdata ="{{image_data}}";
+
+  createAndSaveCardContent(titleFromApp, contentFromApp,imgdata);
   </script>
 </body>
 

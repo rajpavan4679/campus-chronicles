@@ -8,6 +8,8 @@ import requests
 import subprocess
 from fastapi.responses import RedirectResponse
 import psycopg2
+from typing import Optional
+import base64
 
 
 conn = psycopg2.connect(
@@ -104,12 +106,24 @@ async def signup(
 
 
 @app.post("/create")
-async def create_post(request: Request, title: str = Form(...), category: str = Form(...), content: str = Form(...)):
+async def create_post(request: Request, title: str = Form(...), category: str = Form(...), content: str = Form(...),image: UploadFile = File(...)):
     # Store the data in the PostgreSQL database
     cur = conn.cursor()
     cur.execute("INSERT INTO postdetail (category, title, matter) VALUES (%s, %s, %s)", (category, title, content))
     conn.commit()
     cur.close()
+
+
+    with open(f"images/{image.filename}", "wb") as f:
+        f.write(image.file.read())
+
+    
+
+    # Encode the image as base64 to include it in the context
+    with open(f"images/{image.filename}", "rb") as f:
+        image_data = f.read()
+        image_base64 = base64.b64encode(image_data).decode("utf-8")
+
 
     # Construct the template filename based on the category
     template_filename = f"{category}.html"
@@ -119,7 +133,8 @@ async def create_post(request: Request, title: str = Form(...), category: str = 
         "request": request,
         "title": title,
         "category": category,
-        "content": content
+        "content": content,
+        "image_data": image_base64
     }
 
     return templates.TemplateResponse(template_filename, context)
